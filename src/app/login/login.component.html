@@ -1,0 +1,27 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <small class="danger">{{msg}}</small>
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <!-- <img src="src/assets/images/login.jpg" id="icon" alt="User Icon" /> -->
+      <h3>login</h3>
+    </div>
+
+    <!-- Login Form -->
+    <form #loginForm="ngForm" (ngSubmit)="loginUser">
+      <input type="text" class="fadeIn second" name="emailid" [(ngModel)]="user.emailid" placeholder="login">
+      <input type="text" class="fadeIn third" name="password" [(ngModel)]="user.password" placeholder="password">
+      <input type="submit" class="fadeIn fourth" (click)="loginUser()" value="LogIn">
+      <!-- <button class="fadeIn fourth" (click)="loginUser()">login</button> -->
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Forgot Password?</a><br>
+      <!-- <a class="underlineHover" href="#">New Registration</a> -->
+      <small class="underlineHover" (click)="gotoregistration()"> New user ? Rigister here</small>
+    </div>
+
+  </div>
+</div>

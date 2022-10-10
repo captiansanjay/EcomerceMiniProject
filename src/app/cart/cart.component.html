@@ -1,0 +1,116 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<header>
+    <div class="navbar navbar-dark bg-primary shadow-sm">
+        <div class="navbar-brand align-item-center d-flex">
+            <i style="font-size: 20px;" class="fas fa-shipping-fast">&nbsp;
+
+            </i>
+            <strong style="font-size: 20px;"> Mykart</strong>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="search products">
+
+            </div>
+            <span class="fa fa-search search-icon "></span>
+        </div>
+
+        <button routerLink="/cart" class="btn btn-primary">
+            <i class="fa fa-shopping-cart" style="font-size:30px;color:aliceblue"></i>
+            <div style="font-size: 10px;" class="badge">
+            </div>
+        </button>
+    </div>
+</header>
+
+<ng-container *ngIf="product.length!=0">
+    <div class="container">
+        <div class="card-table">
+            <div class="cart-product">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>Product Name</th>
+                            <th>Product Image</th>
+                            <th>Price</th>
+                            <th>Quentity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of product;let i=index">
+                            <td style="width:120px ;">{{i+1}}</td>
+                            <td style="width:120px ;">{{item.name}}</td>
+                            <td><img style="width:120px ;" src="../assets/images/{{item.pictureUrl}}" alt=""></td>
+                            <td style="width:120px ;">'&#8377;' {{item.price}}</td>
+                            <td style="width:120px ;">{{item.quantity}}</td>
+                            <td style="width:120px ;">{{item.total}}</td>
+                            <td>
+                                <button (click)="removeItem(item)" class="btn btn-danger">
+                                    <i class="fas fa-trash-alt"></i>Delete
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>
+                                <google-pay-button environment="TEST" buttonType="buy" buttonColor="black"
+                                    [paymentRequest]="{
+                                  apiVersion: 2,
+                                  apiVersionMinor: 0,
+                                  allowedPaymentMethods: [
+                                    {
+                                      type: 'CARD',
+                                      parameters: {
+                                        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                                        allowedCardNetworks: ['AMEX', 'VISA', 'MASTERCARD']
+                                      },
+                                      tokenizationSpecification: {
+                                        type: 'PAYMENT_GATEWAY',
+                                        parameters: {
+                                          gateway: 'example',
+                                          gatewayMerchantId: 'exampleGatewayMerchantId'
+                                        }
+                                      }
+                                    }
+                                  ],
+                                  merchantInfo: {
+                                    merchantId: '12345678901234567890',
+                                    merchantName: 'Demo Merchant'
+                                  },
+                                  transactionInfo: {
+                                    totalPriceStatus: 'FINAL',
+                                    totalPriceLabel: 'Total',
+                                    totalPrice: '100.00',
+                                    currencyCode: 'USD',
+                                    countryCode: 'US'
+                                  }
+                                }" (loadpaymentdata)="onLoadPaymentData($event)"></google-pay-button>
+                            </td>
+                           
+                            <td><strong>Grand Total:&#8377;{{grandTotal}}</strong></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+
+<ng-container *ngIf="product.length==0">
+    <div class="container">
+        <div class="card">
+            <h5 class="card-title"> My Cart</h5>
+        </div>
+        <div class="center">
+            <img src="../assets/images/cart.png" alt="">
+            <h4>your cart is empty!</h4>
+            <h6>Add item to it now</h6>
+            <button routerLink="/loginsuccess" class="btn btn-primary">Shop Now</button>
+
+        </div>
+    </div>
+
+</ng-container>
